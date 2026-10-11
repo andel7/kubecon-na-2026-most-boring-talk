@@ -11,7 +11,8 @@
       "minikube": "none"
     }
   },
-  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/argo-cd-disaster-recovery-workshop",
+  "postCreateCommand": "bash scripts/post-create.sh",
   "forwardPorts": [8080],
   "portsAttributes": {
     "8080": {

@@ -3,6 +3,7 @@
 ## Before the workshop
 
 - Open a Codespace on your own fork and run the full workshop once. The first `make install-argocd` and `make bootstrap` pull images, which takes a few minutes.
+- The dev container configuration is `.devcontainer/argo-cd-dr-workshop/devcontainer.json` at the repository root (Codespaces only looks there). It opens this folder and runs `scripts/post-create.sh`.
 - The devcontainer requests a 4-core, 8 GB machine. Participants on free Codespaces plans have enough quota for one workshop.
 - Consider enabling Codespaces prebuilds on the upstream repository to shorten setup.
 

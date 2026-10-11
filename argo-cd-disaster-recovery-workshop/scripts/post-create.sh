@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Installs the CLIs the workshop needs on top of the devcontainer features.
+# Codespaces setup: installs the CLIs the workshop needs on top of the dev container features.
+# Runs from .devcontainer/argo-cd-dr-workshop/devcontainer.json at the repository root.
 set -euo pipefail
 
-source "$(dirname "$0")/../scripts/versions.env"
+source "$(dirname "$0")/versions.env"
 
 ARCH="$(dpkg --print-architecture)" # amd64 or arm64
 

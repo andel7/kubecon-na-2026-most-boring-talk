@@ -47,7 +47,6 @@ Facilitators: see [docs/facilitator.md](docs/facilitator.md).
 ## Repository layout
 
 ```text
-.devcontainer/          Codespaces definition (Docker, kind, kubectl, argocd CLI)
 gitops/
   argocd/values.yaml    Helm values for Argo CD, including its settings
   bootstrap/root.yaml   The root ("app of apps") Application, the only thing applied by hand
