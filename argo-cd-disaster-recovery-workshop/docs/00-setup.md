@@ -29,6 +29,14 @@ make configure
 
 ## 3. Open Argo CD
 
-Open the **PORTS** tab and open the forwarded address for **Argo CD UI (8080)**. Log in as `admin`. The setup printed the password; run `make ui` to print it again.
+Check that Argo CD is ready and print the admin password:
+
+```bash
+make ui
+```
+
+If it says the setup is still running, wait a moment and run it again.
+
+Then open the **PORTS** tab and open the forwarded address for **Argo CD UI (8080)**. Log in as `admin` with the printed password.
 
 Next: [Part 1: ClickOps](01-clickops.md)

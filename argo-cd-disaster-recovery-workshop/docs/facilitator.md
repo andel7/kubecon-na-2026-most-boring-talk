@@ -19,7 +19,7 @@
 
 | Symptom | Fix |
 | --- | --- |
-| UI not reachable | `make ui` checks the UI and prints the password. If there is no cluster, run `make setup` |
+| UI not reachable, or password needed | Run `make ui`. It says if the setup is still running, waits for the UI, logs the CLI in and prints the password. If there is no cluster after setup, run `make setup` |
 | Codespace stopped (idle timeout) and the cluster is gone | Reopen the Codespace and run `make setup` |
 | `make bootstrap` says CHANGE_ME | Run `make configure` |
 | Apps stuck on `repository not found` | The fork is not public. Make it public; the workshop does not configure repository credentials |
