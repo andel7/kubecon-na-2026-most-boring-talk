@@ -22,4 +22,4 @@ wait_for_argocd
 wait_for_ui
 cli_login
 echo
-ok "All set. Open docs/00-setup.md to start the workshop."
+ok "All set. Continue with docs/01-clickops.md."

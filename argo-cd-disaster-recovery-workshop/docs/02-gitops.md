@@ -33,7 +33,16 @@ In the UI, check that the banner "This Argo CD is defined in Git" appears, and t
 
 ## 2. Change something through Git
 
-Add a QA environment. In `gitops/apps/guestbook-envs-appset.yaml`, add `- env: qa`:
+Add a QA environment. Open the ApplicationSet in the editor:
+
+```bash
+code gitops/apps/guestbook-envs-appset.yaml
+```
+
+> [!TIP]
+> If the editor doesn't let you type, reload it: open the Command Palette (Cmd/Ctrl+Shift+P) and run **Developer: Reload Window**. Your terminal, files and cluster are not affected.
+
+Add `- env: qa`:
 
 ```yaml
         elements:
