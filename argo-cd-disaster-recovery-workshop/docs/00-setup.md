@@ -14,29 +14,6 @@ Start this as soon as the workshop begins. It boots in the background while the 
    | Machine type | 4-core |
 
    Select **Create codespace**. The terminal opens in the `argo-cd-disaster-recovery-workshop` folder.
-3. Wait for the setup to finish. It installs the tools, creates a Kubernetes cluster and installs Argo CD, and ends with "All set."
+3. The setup runs in the background: it installs the tools, creates a Kubernetes cluster and installs Argo CD. This takes a few minutes.
 
-## 2. Point the GitOps manifests at your fork
-
-The files in `gitops/` contain the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git`. Run this script (it will replace the URL with your fork's URL, commit and push):
-
-```bash
-make configure
-```
-
-> [!NOTE]
-> You will not need these manifests until Part 2. Doing this now means Part 2 is not interrupted.
-
-## 3. Open Argo CD
-
-Check that Argo CD is ready and print the admin password:
-
-```bash
-make ui
-```
-
-If it says the setup is still running, wait a moment and run it again.
-
-Then open the **PORTS** tab and open the forwarded address for **Argo CD UI (8080)**. Log in as `admin` with the printed password.
-
-Next: [Part 1: ClickOps](01-clickops.md)
+When the Codespace opens, [Part 1](01-clickops.md) opens automatically. Start there.

@@ -2,7 +2,19 @@
 
 You will create two apps the way many teams start: by clicking and typing. Then you lose them.
 
-## 1. Create an app in the UI
+## 1. Open Argo CD
+
+In the terminal, check that the setup has finished and print the admin password:
+
+```bash
+make ui
+```
+
+If it says the setup is still running, wait a moment and run it again.
+
+Then open the **PORTS** tab and open the forwarded address for **Argo CD UI (8080)**. Log in as `admin` with the printed password.
+
+## 2. Create an app in the UI
 
 1. Select **+ New App**.
 2. Fill in:
@@ -24,7 +36,7 @@ You will create two apps the way many teams start: by clicking and typing. Then 
 
 The deletion finalizer means that deleting the app also deletes everything it deployed.
 
-## 2. Create an app with the CLI
+## 3. Create an app with the CLI
 
 ```bash
 argocd app create helm-guestbook \
@@ -46,7 +58,7 @@ argocd app list
 
 Where is the definition of these two apps stored? Only in this cluster.
 
-## 3. Disaster
+## 4. Disaster
 
 ```bash
 make disaster
@@ -54,7 +66,7 @@ make disaster
 
 Every Application, and everything it deployed, is gone. Argo CD is still running, but it doesn't remember anything.
 
-## 4. Rebuild from memory
+## 5. Rebuild from memory
 
 Create both apps again, in the UI or the CLI. Don't scroll back through this page or your terminal, because in a real disaster that history lived on someone else's laptop. You have **2 minutes**.
 

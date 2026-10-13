@@ -11,12 +11,15 @@ The same apps again, but this time they are declared in Git, in the `gitops/` fo
 
 ## 1. Start from Git
 
-Remove the apps you rebuilt by hand, then set everything up from Git:
+Remove the apps you rebuilt by hand, point the manifests at your fork, and set everything up from Git:
 
 ```bash
 make clean
+make configure
 make bootstrap
 ```
+
+`make configure` replaces the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git` in `gitops/bootstrap/root.yaml` with your fork's URL, then commits and pushes.
 
 `make bootstrap` runs two commands:
 

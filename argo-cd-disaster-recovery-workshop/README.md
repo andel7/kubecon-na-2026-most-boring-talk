@@ -34,7 +34,7 @@ flowchart LR
 
 | Step | What you do | Time |
 | --- | --- | --- |
-| [Setup](docs/00-setup.md) | Fork, open a Codespace, point the manifests at your fork | during the intro |
+| [Setup](docs/00-setup.md) | Fork and open a Codespace | during the intro |
 | [1. ClickOps](docs/01-clickops.md) | Create two apps, lose them, rebuild by hand | 4 min |
 | [2. GitOps](docs/02-gitops.md) | Set up from Git, change something, lose it all, recover | 4 min |
 | [Wrap-up](docs/03-wrap-up.md) | What Git does not save you from | 2 min |
