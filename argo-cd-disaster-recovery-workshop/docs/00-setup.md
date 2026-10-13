@@ -1,4 +1,6 @@
-# Lab 0: Setup
+# Setup (during the intro)
+
+Start this as soon as the workshop begins. It boots in the background while the intro runs.
 
 ## 1. Fork and open a Codespace
 
@@ -12,35 +14,21 @@
    | Machine type | 4-core |
 
    Select **Create codespace**. The terminal opens in the `argo-cd-disaster-recovery-workshop` folder.
-3. Wait for the setup to finish. It installs Docker, `kind`, `kubectl`, `helm`, the `argocd` CLI and `jq`, and ends with "All set."
-
-Check the command-line tools. There is no cluster and no Argo CD yet; you create them in Lab 1.
-
-```bash
-docker ps                          # Docker is running
-kind version                       # Kind is installed
-kubectl version --client           # --client: don't look for a cluster yet
-helm version --short               # Helm is installed
-argocd version --client --short    # Argo CD CLI installed, not the server
-```
+3. Wait for the setup to finish. It installs the tools, creates a Kubernetes cluster and installs Argo CD, and ends with "All set."
 
 ## 2. Point the GitOps manifests at your fork
 
-The files in `gitops/` contain the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git`. Replace it with your fork's URL, then commit and push. This only edits files in Git; it doesn't install anything:
+The files in `gitops/` contain the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git`. Run this script (it will replace the URL with your fork's URL, commit and push):
 
 ```bash
 make configure
 ```
 
-In Codespaces the script reads your fork's name from `GITHUB_REPOSITORY`. Elsewhere it uses `git remote get-url origin`.
-
 > [!NOTE]
-> You will not need these manifests until Lab 3. Doing this now means Lab 3 is not interrupted.
+> You will not need these manifests until Part 2. Doing this now means Part 2 is not interrupted.
 
-## 3. Get to know the make targets
+## 3. Open Argo CD
 
-```bash
-make help
-```
+Open the **PORTS** tab and open the forwarded address for **Argo CD UI (8080)**. Log in as `admin`. The setup printed the password; run `make ui` to print it again.
 
-Next: [Lab 1: Life with ClickOps](01-clickops.md)
+Next: [Part 1: ClickOps](01-clickops.md)

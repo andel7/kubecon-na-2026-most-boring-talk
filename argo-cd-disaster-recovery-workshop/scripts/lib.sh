@@ -5,6 +5,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 source "${ROOT_DIR}/scripts/versions.env"
 
+# The one kind cluster used for the whole workshop.
+CLUSTER_NAME="argocd-workshop"
+
 bold()  { printf '\033[1m%s\033[0m\n' "$*"; }
 info()  { printf '\033[36m==>\033[0m %s\n' "$*"; }
 ok()    { printf '\033[32m✔\033[0m %s\n' "$*"; }
@@ -12,7 +15,7 @@ warn()  { printf '\033[33m!\033[0m %s\n' "$*"; }
 fail()  { printf '\033[31m✘\033[0m %s\n' "$*" >&2; exit 1; }
 
 require_cluster() {
-  kubectl cluster-info >/dev/null 2>&1 || fail "No reachable cluster. Run 'make cluster NAME=<name>' first."
+  kubectl cluster-info >/dev/null 2>&1 || fail "No reachable cluster. Run 'make setup' first."
 }
 
 wait_for_argocd() {
@@ -29,7 +32,7 @@ wait_for_ui() {
     curl -fsS -o /dev/null http://localhost:8080/healthz 2>/dev/null && return 0
     sleep 2
   done
-  fail "The Argo CD UI is not reachable on localhost:8080. Was the cluster created with 'make cluster'?"
+  fail "The Argo CD UI is not reachable on localhost:8080. Was the cluster created with 'make setup'?"
 }
 
 admin_password() {
@@ -57,4 +60,29 @@ helm_install_argocd() {
     --version "${ARGOCD_CHART_VERSION}" \
     --namespace argocd --create-namespace \
     "$@" >/dev/null
+}
+
+# wait_for_apps waits until every Application is Synced and Healthy.
+wait_for_apps() {
+  info "Waiting for Argo CD to sync everything from Git"
+  local deadline apps count pending
+  deadline=$(( $(date +%s) + 300 ))
+  while :; do
+    apps="$(kubectl -n argocd get applications.argoproj.io -o json)"
+    count="$(jq '.items | length' <<<"${apps}")"
+    pending="$(jq '[.items[] | select(.status.sync.status != "Synced" or .status.health.status != "Healthy")] | length' <<<"${apps}")"
+    printf '\r  %s applications, %s still syncing   ' "${count}" "${pending}"
+    if (( count > 1 && pending == 0 )); then echo; break; fi
+    if (( $(date +%s) > deadline )); then echo; warn "Some applications are not healthy yet. Check the UI."; break; fi
+    sleep 3
+  done
+  kubectl -n argocd get applications.argoproj.io
+}
+
+# apply_root applies the root Application from Git, the one object you create by hand.
+apply_root() {
+  if grep -q "CHANGE_ME" "${ROOT_DIR}/gitops/bootstrap/root.yaml"; then
+    fail "gitops/bootstrap/root.yaml still points at CHANGE_ME. Run 'make configure' first."
+  fi
+  kubectl apply -f "${ROOT_DIR}/gitops/bootstrap/root.yaml"
 }

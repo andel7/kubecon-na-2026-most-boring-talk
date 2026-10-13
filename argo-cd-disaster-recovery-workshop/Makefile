@@ -1,31 +1,33 @@
 # Workshop shortcuts. Run `make help` to list them.
-NAME ?= primary
 
-.PHONY: help configure cluster install-argocd ui disaster bootstrap status reset
+.PHONY: help setup configure ui disaster clean bootstrap recover status teardown
 
 help: ## List targets
-	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-z-]+:.*##' $(MAKEFILE_LIST) | awk -F':.*## ' '{printf "  \033[36m%-11s\033[0m %s\n", $$1, $$2}'
+
+setup: ## Create the cluster and install Argo CD (runs automatically in Codespaces)
+	@scripts/setup.sh
 
 configure: ## Point gitops/ at your fork, commit and push
 	@scripts/configure-repo.sh
 
-cluster: ## Create a kind cluster (NAME=primary|dr)
-	@scripts/cluster.sh $(NAME)
-
-install-argocd: ## ClickOps: install a plain Argo CD with kubectl
-	@scripts/install-argocd.sh
-
 ui: ## Show the UI address and admin password, and log in the CLI
 	@scripts/ui.sh
 
-disaster: ## Destroy a cluster (NAME=primary|dr)
-	@scripts/disaster.sh $(NAME)
+disaster: ## Delete every app and everything it deployed
+	@scripts/disaster.sh
 
-bootstrap: ## GitOps: install Argo CD and the root app from Git
+clean: ## Same as disaster, without the drama (between parts)
+	@scripts/disaster.sh --quiet
+
+bootstrap: ## GitOps: configure Argo CD from Git and apply the root app
 	@scripts/bootstrap.sh
 
-status: ## Show clusters and what Argo CD manages
+recover: ## GitOps: recover every app by applying the root app
+	@scripts/recover.sh
+
+status: ## Show what Argo CD manages
 	@scripts/status.sh
 
-reset: ## Delete all workshop clusters
-	@scripts/reset.sh
+teardown: ## Delete the workshop cluster completely
+	@scripts/teardown.sh

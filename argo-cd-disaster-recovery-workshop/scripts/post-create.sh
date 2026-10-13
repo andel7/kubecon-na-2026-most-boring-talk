@@ -26,4 +26,4 @@ argocd version --client --short
 jq --version
 
 echo
-echo "All set. Open docs/00-setup.md to start the workshop."
+echo "Tools installed. Next: creating the workshop cluster and installing Argo CD."

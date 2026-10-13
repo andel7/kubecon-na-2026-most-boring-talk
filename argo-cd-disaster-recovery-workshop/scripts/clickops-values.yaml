@@ -9,3 +9,8 @@ server:
     # Exposed on localhost:8080 through the kind port mapping in scripts/kind-config.yaml.
     type: NodePort
     nodePortHttp: 30080
+# Not used in the workshop; leaving them out makes the install lighter and faster.
+dex:
+  enabled: false
+notifications:
+  enabled: false

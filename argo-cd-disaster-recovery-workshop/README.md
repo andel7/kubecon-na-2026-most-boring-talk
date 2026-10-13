@@ -1,25 +1,25 @@
 # Argo CD disaster recovery workshop
 
-Your Argo CD cluster is gone. How long until everything is back?
+All your Argo CD Applications are gone. How long until everything is back?
 
-In this workshop you run the same Argo CD setup twice, then destroy the cluster each time:
+In 10 minutes you run the same two apps twice, and lose them each time:
 
-1. **ClickOps.** You create apps in the UI and CLI. Then the cluster burns down, and you try to rebuild them from memory.
-2. **GitOps.** The same setup, but everything is declared in this repository. The cluster burns down again, and you recover it with two commands.
+1. **ClickOps.** You create the apps in the UI and CLI. Then they are deleted, and you rebuild them from memory.
+2. **GitOps.** The same apps, declared in this repository. They are deleted again, and you recover them with one command.
 
 ```mermaid
 flowchart LR
-  subgraph Git["Git (this repo)"]
+  subgraph Git["Git (your fork)"]
     A[gitops/argocd/values.yaml<br/>Argo CD settings]
     B[gitops/bootstrap/root.yaml]
-    C[gitops/apps/*<br/>projects, apps, appsets]
+    C[gitops/apps/*<br/>apps and appsets]
   end
-  subgraph New["Brand-new cluster"]
+  subgraph Cluster["Cluster"]
     D[Argo CD]
     E[root app]
     F[all other apps]
   end
-  A -- "helm install" --> D
+  A -- "helm upgrade" --> D
   B -- "kubectl apply -f" --> E
   E -- "Argo CD syncs" --> F
   C -. read by .-> E
@@ -28,19 +28,16 @@ flowchart LR
 ## What you need
 
 - A GitHub account with Codespaces access.
-- About 90 minutes.
 - Basic Kubernetes knowledge. No prior Argo CD experience is needed.
 
-## Labs
+## Steps
 
-| Lab | What you do | Time |
+| Step | What you do | Time |
 | --- | --- | --- |
-| [0. Setup](docs/00-setup.md) | Fork, open a Codespace, point the manifests at your fork | 10 min |
-| [1. Life with ClickOps](docs/01-clickops.md) | Install Argo CD, create three apps in the UI and CLI | 20 min |
-| [2. Disaster #1](docs/02-clickops-disaster.md) | Lose the cluster and rebuild by hand | 15 min |
-| [3. Life with GitOps](docs/03-gitops.md) | Bootstrap Argo CD from Git, make changes through Git | 20 min |
-| [4. Disaster #2](docs/04-gitops-disaster.md) | Lose the cluster and recover in two commands | 10 min |
-| [5. Wrap-up](docs/05-wrap-up.md) | What Git does not save you from | 10 min |
+| [Setup](docs/00-setup.md) | Fork, open a Codespace, point the manifests at your fork | during the intro |
+| [1. ClickOps](docs/01-clickops.md) | Create two apps, lose them, rebuild by hand | 4 min |
+| [2. GitOps](docs/02-gitops.md) | Set up from Git, change something, lose it all, recover | 4 min |
+| [Wrap-up](docs/03-wrap-up.md) | What Git does not save you from | 2 min |
 
 Facilitators: see [docs/facilitator.md](docs/facilitator.md).
 
@@ -50,7 +47,7 @@ Facilitators: see [docs/facilitator.md](docs/facilitator.md).
 gitops/
   argocd/values.yaml    Helm values for Argo CD, including its settings
   bootstrap/root.yaml   The root ("app of apps") Application, the only thing applied by hand
-  apps/                 Every project, Application and ApplicationSet the root app manages
+  apps/                 Every Application and ApplicationSet the root app manages
 scripts/                Helpers behind the make targets
 Makefile                Run `make help`
 ```
