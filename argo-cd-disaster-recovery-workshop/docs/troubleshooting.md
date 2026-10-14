@@ -23,3 +23,8 @@ Select **Create codespace**.
 Make sure the root folder in the explorer now shows `argo-cd-disaster-recovery-workshop`.
 
 Continue to [01-clickops.md](../docs/01-clickops.md)
+
+# My root app in Argo CD UI has an error
+If this is the error: `Failed to load target state: failed to generate manifest for source 1 of 1: rpc error: code = Unknown desc = failed to list refs: authentication required: Repository not found.` then probably the root app still points to a placeholder Git repo URL instead of your Git repo fork. 
+
+Run `make configure` 
