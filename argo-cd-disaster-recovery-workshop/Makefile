@@ -14,7 +14,7 @@ configure: ## Point gitops/ at your fork, commit and push
 ui: ## Show the UI address and admin password, and log in the CLI
 	@scripts/ui.sh
 
-disaster: ## Delete every app and everything it deployed
+disaster: ## Delete every Application; the workloads keep running
 	@scripts/disaster.sh
 
 clean: ## Same as disaster, without the drama (between parts)

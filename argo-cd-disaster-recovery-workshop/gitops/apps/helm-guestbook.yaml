@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: helm-guestbook
   namespace: argocd
-  # Deleting the app also deletes everything it deployed.
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:

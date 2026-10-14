@@ -40,7 +40,6 @@ Open the Argo CD UI URL. Log in as `admin` with the printed password.
    | Application Name | `guestbook` |
    | Project Name | `default` |
    | Sync Policy | `Automatic` |
-   | Set Deletion Finalizer | checked |
    | Auto-Create Namespace | checked |
    | Repository URL | `https://github.com/argoproj/argocd-example-apps.git` |
    | Revision | `HEAD` |
@@ -50,8 +49,6 @@ Open the Argo CD UI URL. Log in as `admin` with the printed password.
 
 3. Select **Create**, then watch the app become **Synced** and **Healthy**.
 
-The deletion finalizer means that deleting the app also deletes everything it deployed.
-
 ## 3. Create an app with the CLI
 
 ```bash
@@ -60,8 +57,7 @@ argocd app create helm-guestbook \
   --path helm-guestbook \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace helm-guestbook \
-  --sync-option CreateNamespace=true \
-  --set-finalizer
+  --sync-option CreateNamespace=true
 
 argocd app sync helm-guestbook
 ```
@@ -85,11 +81,19 @@ Explore the apps in the Argo CD UI briefly.
 make disaster
 ```
 
-Every Application, and everything it deployed, is gone. Argo CD is still running, but it doesn't remember anything.
+The cluster where Argo CD runs just died. In real life, Argo CD often runs on its own management cluster, separate from the apps it deploys. That's what this simulates: every Application is gone from Argo CD, but the workloads themselves are still running:
+
+```bash
+kubectl get deployments --all-namespaces
+```
+
+Your users don't notice anything yet. But nothing manages these apps any more: no syncing, no self-healing, and no record of how they were configured.
 
 ## 6. Rebuild from memory
 
 Create both apps again, in the UI or the CLI. Don't scroll back through this page or your terminal, because in a real disaster that history lived on someone else's laptop. You have **2 minutes**.
+
+If you get every setting right, Argo CD picks up the running app and shows it as **Synced**. If not, you'll see it **OutOfSync**, or a second copy of the app.
 
 When time is up, check your work:
 
@@ -98,8 +102,8 @@ When time is up, check your work:
 
 | App | Details |
 | --- | --- |
-| `guestbook` | Path `guestbook`, namespace `guestbook`, automatic sync, deletion finalizer, `CreateNamespace=true` |
-| `helm-guestbook` | Path `helm-guestbook`, namespace `helm-guestbook`, manual sync, deletion finalizer, `CreateNamespace=true` |
+| `guestbook` | Path `guestbook`, namespace `guestbook`, automatic sync, `CreateNamespace=true` |
+| `helm-guestbook` | Path `helm-guestbook`, namespace `helm-guestbook`, manual sync, `CreateNamespace=true` |
 
 </details>
 

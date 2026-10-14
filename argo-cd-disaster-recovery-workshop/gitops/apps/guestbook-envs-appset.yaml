@@ -7,6 +7,10 @@ metadata:
   namespace: argocd
 spec:
   goTemplate: true
+  syncPolicy:
+    # Without this, the ApplicationSet adds a deletion finalizer to every app it creates,
+    # and deleting an app would also delete its running workload.
+    preserveResourcesOnDeletion: true
   goTemplateOptions: ["missingkey=error"]
   generators:
     - list:
@@ -16,9 +20,6 @@ spec:
   template:
     metadata:
       name: guestbook-{{.env}}
-      # Deleting the app also deletes everything it deployed.
-      finalizers:
-        - resources-finalizer.argocd.argoproj.io
     spec:
       project: default
       source:

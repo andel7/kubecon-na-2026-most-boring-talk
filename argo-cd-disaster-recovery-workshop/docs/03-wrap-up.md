@@ -9,7 +9,7 @@
 | Audit trail | None | `git log` |
 | Recovery time | Depends on how much you and your team remember | Under a minute |
 
-Recovering from losing the whole cluster where Argo CD lives works the same way: install Argo CD with the Helm values from Git (`make bootstrap` step 1), then apply the root app.
+The disaster simulated losing the cluster where Argo CD runs, while your workloads keep running elsewhere. A real recovery adds one step at the start: install Argo CD on a new cluster with the Helm values from Git (`make bootstrap` step 1). Then apply the root app, and every app reconnects to its running workload.
 
 ## What Git does not save you from
 
