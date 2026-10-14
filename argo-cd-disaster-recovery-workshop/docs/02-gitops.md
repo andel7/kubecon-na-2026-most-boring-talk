@@ -28,11 +28,11 @@ make bootstrap
 
 - `make bootstrap` runs two commands:
 
-```bash
-helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm \
-  --version 10.10.1 --namespace argocd -f gitops/argocd/values.yaml
-kubectl apply -f gitops/bootstrap/root.yaml
-```
+   ```bash
+   helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm \
+     --version 10.10.1 --namespace argocd -f gitops/argocd/values.yaml
+   kubectl apply -f gitops/bootstrap/root.yaml
+   ```
 
 **Look around in the UI** 
 
