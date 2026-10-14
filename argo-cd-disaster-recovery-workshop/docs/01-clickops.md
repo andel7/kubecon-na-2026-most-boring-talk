@@ -26,7 +26,7 @@ Argo CD UI: http://localhost:8080
 Username:   admin    
 Password:   ...   
 ```
-You can kill the `watch` command or open a new terminal.
+You can stop the `watch` command with Ctrl+C or open a new terminal.
 
 Open the Argo CD UI URL. Log in as `admin` with the printed password.
 
