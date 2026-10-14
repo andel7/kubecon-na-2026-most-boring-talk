@@ -15,17 +15,18 @@ Additional files are stored under `gitops/` folder to follow more disaster recov
 
 ## 1. Start from Git
 
-Remove the apps you rebuilt by hand, point the manifests at your fork, and set everything up from Git:
+Remove the apps you rebuilt by hand, point the manifests at your fork, and set everything up from Git by running:
 
 ```bash
 make clean
 make configure
 make bootstrap
 ```
+**What the scripts above do:**
+- `make clean` deletes all apps and the workloads they manage
+- `make configure` replaces the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git` in `gitops/bootstrap/root.yaml` with your fork's URL, then commits and pushes.
 
-`make configure` replaces the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git` in `gitops/bootstrap/root.yaml` with your fork's URL, then commits and pushes.
-
-`make bootstrap` runs two commands:
+- `make bootstrap` runs two commands:
 
 ```bash
 helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm \
@@ -33,7 +34,15 @@ helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-hel
 kubectl apply -f gitops/bootstrap/root.yaml
 ```
 
+**Look around in the UI** 
+
 In the UI, check that the banner "This Argo CD is defined in Git" appears, and that `root`, `guestbook`, `helm-guestbook`, `guestbook-dev` and `guestbook-prod` are all **Synced** and **Healthy**.
+
+If you need the Argo CD UI URL and password, run:
+
+```bash
+make ui
+```
 
 ## 2. Change something through Git
 
@@ -73,6 +82,8 @@ Explore the apps in the Argo CD UI briefly.
 
 ## 4. Disaster
 
+Run:
+
 ```bash
 make disaster
 ```
@@ -80,6 +91,8 @@ make disaster
 Every Application, and everything it deployed, is gone, again. Argo CD is still running, but it doesn't remember anything.
 
 ## 5. Recover
+
+Run:
 
 ```bash
 make recover
