@@ -11,11 +11,11 @@ echo "==> Installing jq"
 sudo apt-get update -qq && sudo apt-get install -y -qq jq >/dev/null
 
 echo "==> Installing kind ${KIND_VERSION}"
-curl -fsSLo /tmp/kind "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-${ARCH}"
+curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors -o /tmp/kind "https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-linux-${ARCH}"
 sudo install -m 0755 /tmp/kind /usr/local/bin/kind
 
 echo "==> Installing argocd CLI ${ARGOCD_VERSION}"
-curl -fsSLo /tmp/argocd "https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-${ARCH}"
+curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors -o /tmp/argocd "https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_VERSION}/argocd-linux-${ARCH}"
 sudo install -m 0755 /tmp/argocd /usr/local/bin/argocd
 
 echo "==> Tool versions"

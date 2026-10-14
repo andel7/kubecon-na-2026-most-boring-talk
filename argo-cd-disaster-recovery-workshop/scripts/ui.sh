@@ -7,6 +7,10 @@ if pgrep -f "scripts/setup.sh" >/dev/null; then
   warn "To watch it: Command Palette > 'Codespaces: View Creation Log'."
   exit 1
 fi
+if [[ -f "${SETUP_FAILED_MARKER}" ]]; then
+  fail "The setup failed ($(cat "${SETUP_FAILED_MARKER}")). Run 'make setup' to try again."
+fi
 require_cluster
+helm status argocd -n argocd >/dev/null 2>&1 || fail "Argo CD is not installed. Run 'make setup'."
 wait_for_ui
 cli_login

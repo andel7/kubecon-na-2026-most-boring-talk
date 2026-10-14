@@ -74,6 +74,7 @@ gitops/
   argocd/values.yaml    Helm values for Argo CD, including its settings
   bootstrap/root.yaml   The root ("app of apps") Application, the only thing applied by hand
   apps/                 Every Application and ApplicationSet the root app manages
+charts/                 The Argo CD Helm chart, so installing it needs no download
 scripts/                Helpers behind the make targets
 Makefile                Run `make help`
 ```

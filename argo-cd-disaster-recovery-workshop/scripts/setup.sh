@@ -3,6 +3,16 @@
 # Runs automatically when the Codespace is created; safe to run again.
 source "$(dirname "$0")/lib.sh"
 
+# If any step fails, say so loudly and leave a marker for 'make ui'.
+set -E
+rm -f "${SETUP_FAILED_MARKER}"
+on_failure() {
+  echo "Setup failed at: ${BASH_COMMAND}" >"${SETUP_FAILED_MARKER}"
+  echo
+  printf '\033[31m✘ The setup FAILED. Fix the error above, then run: make setup\033[0m\n' >&2
+}
+trap on_failure ERR
+
 if kind get clusters 2>/dev/null | grep -qx "${CLUSTER_NAME}"; then
   ok "Cluster '${CLUSTER_NAME}' already exists"
 else

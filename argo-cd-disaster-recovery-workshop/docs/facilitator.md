@@ -26,4 +26,5 @@
 | `guestbook-qa` does not appear | Run `argocd app get root --refresh`, or wait a minute |
 | Editor won't take input (no cursor, or files show a lock) | A browser client glitch. Command Palette > **Developer: Reload Window** fixes it |
 | Part 1 doesn't open automatically | Run `code docs/01-clickops.md` in the terminal |
+| `make ui` says the setup failed | Usually a temporary download error. Run `make setup` to try again; it skips what's already done |
 | Want to start over | `make clean` removes all Applications, but their workloads keep running. For a completely fresh start, `make teardown` then `make setup` rebuilds the cluster |

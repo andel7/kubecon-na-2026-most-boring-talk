@@ -8,6 +8,12 @@ source "${ROOT_DIR}/scripts/versions.env"
 # The one kind cluster used for the whole workshop.
 CLUSTER_NAME="argocd-workshop"
 
+# The Argo CD Helm chart ships with the repo, so installing it needs no download.
+ARGOCD_CHART="${ROOT_DIR}/charts/argo-cd-${ARGOCD_CHART_VERSION}.tgz"
+
+# Written by 'make setup' when it fails, so 'make ui' can say so instead of waiting.
+SETUP_FAILED_MARKER="${HOME}/.argocd-workshop-setup-failed"
+
 bold()  { printf '\033[1m%s\033[0m\n' "$*"; }
 info()  { printf '\033[36m==>\033[0m %s\n' "$*"; }
 ok()    { printf '\033[32m✔\033[0m %s\n' "$*"; }
@@ -52,12 +58,10 @@ cli_login() {
 }
 
 
-# helm_install_argocd installs (or upgrades) the Argo CD Helm chart.
+# helm_install_argocd installs (or upgrades) Argo CD from the chart in charts/.
 # Extra arguments are passed to helm, e.g. -f values.yaml.
 helm_install_argocd() {
-  helm upgrade --install argocd argo-cd \
-    --repo https://argoproj.github.io/argo-helm \
-    --version "${ARGOCD_CHART_VERSION}" \
+  helm upgrade --install argocd "${ARGOCD_CHART}" \
     --namespace argocd --create-namespace \
     "$@" >/dev/null
 }

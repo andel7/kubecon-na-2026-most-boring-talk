@@ -29,8 +29,8 @@ make bootstrap
 - `make bootstrap` runs two commands:
 
    ```bash
-   helm upgrade --install argocd argo-cd --repo https://argoproj.github.io/argo-helm \
-     --version 10.10.1 --namespace argocd -f gitops/argocd/values.yaml
+   helm upgrade --install argocd charts/argo-cd-10.10.1.tgz \
+     --namespace argocd -f gitops/argocd/values.yaml
    kubectl apply -f gitops/bootstrap/root.yaml
    ```
 
