@@ -4,9 +4,13 @@ The same apps again, but this time they are declared in Git, in the `gitops/` fo
 
 | File | What it is |
 | --- | --- |
-| `gitops/argocd/values.yaml` | Argo CD's own settings, as Helm values |
-| `gitops/bootstrap/root.yaml` | The root ("app of apps") Application, the only object you create by hand |
 | `gitops/apps/guestbook.yaml`, `helm-guestbook.yaml` | Your two apps from Part 1 |
+
+Additional files are stored under `gitops/` folder to follow more disaster recovery best practices:
+| File | What it is |
+| --- | --- |
+| `gitops/bootstrap/root.yaml` | The root ("app of apps") Application, the only object you create by hand |
+| `gitops/argocd/values.yaml` | Argo CD's own settings, as Helm values |
 | `gitops/apps/guestbook-envs-appset.yaml` | An ApplicationSet that creates one guestbook per environment |
 
 ## 1. Start from Git
@@ -47,8 +51,8 @@ Add `- env: qa`:
 ```yaml
         elements:
           - env: dev
-          - env: qa
           - env: prod
+          - env: qa
 ```
 
 Commit, push, and tell Argo CD to check Git now instead of waiting up to a minute:
@@ -60,20 +64,32 @@ argocd app get root --refresh
 
 A `guestbook-qa` app appears.
 
-## 3. Disaster
+## 3. Where do your apps live?
+
+Explore the apps in the Argo CD UI briefly.
+
+- Where is the definition of these apps stored? In Git.
+- Is there an audit trail of what was done? Yes, `git log`. It outlives terminal history and human memory.
+
+## 4. Disaster
 
 ```bash
 make disaster
 ```
 
-Everything is gone again.
+Every Application, and everything it deployed, is gone, again. Argo CD is still running, but it doesn't remember anything.
 
-## 4. Recover
+## 5. Recover
 
 ```bash
 make recover
 ```
 
+This script runs `kubectl apply -f gitops/bootstrap/root.yaml` and then just waits for the apps to become synced and healthy.
+
 That is the whole runbook: `kubectl apply -f gitops/bootstrap/root.yaml`. Every app comes back, including `guestbook-qa`, and the script prints how long it took.
+Look briefly at the Argo CD UI and observe all the apps re-appearing.
+
+And this recovery would be as easy with 200 apps (it would take a bit longer though)!  
 
 Next: [Wrap-up](03-wrap-up.md)

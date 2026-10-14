@@ -4,15 +4,31 @@ You will create two apps the way many teams start: by clicking and typing. Then 
 
 ## 1. Open Argo CD
 
-In the terminal, check that the setup has finished and print the admin password:
+In the terminal, check that the setup has finished and print the admin password, by running this:
 
 ```bash
 make ui
 ```
 
-If it says the setup is still running, wait a moment and run it again.
+If it says the setup is still running, rerun it with `watch`, which will run it repeatedly till it succeeds:
 
-Then open the **PORTS** tab and open the forwarded address for **Argo CD UI (8080)**. Log in as `admin` with the printed password.
+```bash
+watch make ui
+```
+
+Eventually you will see:
+
+```
+==> Waiting for the Argo CD UI on http://localhost:8080   
+✔ argocd CLI logged in as admin
+
+Argo CD UI: http://localhost:8080     
+Username:   admin    
+Password:   ...   
+```
+You can kill the `watch` command or open a new terminal.
+
+Open the Argo CD UI URL. Log in as `admin` with the printed password.
 
 ## 2. Create an app in the UI
 
@@ -56,9 +72,14 @@ Check that both apps are **Synced** and **Healthy**:
 argocd app list
 ```
 
-Where is the definition of these two apps stored? Only in this cluster.
+## 4. Where do your apps live?
 
-## 4. Disaster
+Explore the apps in the Argo CD UI briefly.
+
+- Where is the definition of these two apps stored? Only in this cluster.
+- Is there an audit trail of what was done? Hardly any. The CLI commands would not survive in the terminal history (or human memory) for long.
+
+## 5. Disaster
 
 ```bash
 make disaster
@@ -66,7 +87,7 @@ make disaster
 
 Every Application, and everything it deployed, is gone. Argo CD is still running, but it doesn't remember anything.
 
-## 5. Rebuild from memory
+## 6. Rebuild from memory
 
 Create both apps again, in the UI or the CLI. Don't scroll back through this page or your terminal, because in a real disaster that history lived on someone else's laptop. You have **2 minutes**.
 
@@ -82,6 +103,6 @@ When time is up, check your work:
 
 </details>
 
-Now imagine 200 apps, created by 15 people over two years.
+Now imagine those were 200 apps, created by 15 people over two years, from their laptops.
 
 Next: [Part 2: GitOps](02-gitops.md)
