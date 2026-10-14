@@ -26,7 +26,7 @@ GitOps recovers your *desired state*. Plan for these separately:
 - Rehearse disaster recovery regularly, as you just did.
 
 ## Top 30 Argo CD anti-patterns to avoid when adopting Gitops
-- Please read (this blog post)[https://octopus.com/blog/30-argo-cd-antipatterns-for-gitops] by **Kostis Kapelonis** from **Octopus Deploy** to learn more about anti-patterns and best practices!
+- Please read [this blog post](https://octopus.com/blog/30-argo-cd-antipatterns-for-gitops) by **Kostis Kapelonis** from **Octopus Deploy** to learn more about anti-patterns and best practices!
 
 ## Clean up
 
