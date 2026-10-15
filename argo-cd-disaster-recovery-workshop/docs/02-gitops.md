@@ -23,7 +23,7 @@ make configure
 make bootstrap
 ```
 **What the scripts above do:**
-- `make clean` deletes the Applications you rebuilt by hand. Their workloads keep running, and the apps from Git take them over.
+- `make clean` deletes the Applications you rebuilt by hand. Their workloads keep running.
 - `make configure` replaces the placeholder `https://github.com/CHANGE_ME/argocd-dr-workshop.git` in `gitops/bootstrap/root.yaml` with your fork's URL, then commits and pushes.
 
 - `make bootstrap` runs two commands:
@@ -34,9 +34,12 @@ make bootstrap
    kubectl apply -f gitops/bootstrap/root.yaml
    ```
 
-**Look around in the UI** 
+   The apps in Git, that were just created in Argo CD with the root app, take your existing workloads over!
 
-In the UI, check that the banner "This Argo CD is defined in Git" appears, and that `root`, `guestbook`, `helm-guestbook`, `guestbook-dev` and `guestbook-prod` are all **Synced** and **Healthy**.
+**Look around in the Argo CD UI** 
+
+Reload the page with Argo CD UI and check that the banner "This Argo CD is defined in Git" appears. 
+Check that `root`, `guestbook`, `helm-guestbook`, `guestbook-dev` and `guestbook-prod` are all **Synced** and **Healthy**.
 
 If you need the Argo CD UI URL and password, run:
 
@@ -69,6 +72,7 @@ Commit, push, and tell Argo CD to check Git now instead of waiting up to a minut
 ```bash
 git commit -am "Add a QA environment" && git push
 argocd app get root --refresh
+argocd app list
 ```
 
 A `guestbook-qa` app appears.
@@ -93,6 +97,8 @@ The cluster running Argo CD died again. Every Application is gone from Argo CD, 
 ```bash
 kubectl get deployments --all-namespaces
 ```
+
+Check that the Argo CD UI is now empty.
 
 ## 5. Recover
 

@@ -1,5 +1,8 @@
 # Part 1: ClickOps
 
+> [!TIP]
+> Reading this as plain text? Press **Cmd+Shift+V** (Mac) or **Ctrl+Shift+V** (Windows/Linux) to see it formatted.
+
 You will create two apps the way many teams start: by clicking and typing. Then you lose them.
 
 ## 1. Open Argo CD

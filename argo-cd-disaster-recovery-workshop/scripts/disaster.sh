@@ -29,7 +29,7 @@ echo
 if ${quiet}; then
   ok "All Applications deleted. The workloads are still running."
 else
-  warn "Argo CD doesn't know about any of your apps any more."
+  warn "Argo CD doesn't know about any of your workloads any more."
   warn "They are still running, but nothing syncs, self-heals or tracks how they were configured."
   echo
   info "Still running:"
