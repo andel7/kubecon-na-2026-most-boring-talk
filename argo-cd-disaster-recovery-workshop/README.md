@@ -29,22 +29,23 @@ In your fork, select **Code** > **Codespaces**, then **...** > **New with option
 | Dev container configuration | **Argo CD disaster recovery workshop** |
 | Machine type | 4-core |
 
-Select **Create codespace**.
+Select **Create codespace**, a new browser tab will open and you will see a progress bar on the Explorer left part of the screen. It will take a couple of minutes till everything is set up.
+
+### 3. Focus back on the speakers on stage
+We will guide you when to start Part 1.
+
+
+### 4. Open Part 1
 
 If you get a `Do you trust the authors of the files in this folder?` dialogue, make sure to press the green `Trust Folder & Continue` button, otherwise the workshop may not run.
 
-### 3. Open Part 1
-
-When the Codespace opens, Part 1 (docs/01-clickops.md file) should open automatically. If it doesn't, run this in the terminal:
+Part 1 (docs/01-clickops.md file) should be now open in the editor. If it isn't, run this in the terminal:
 
 ```bash
 code docs/01-clickops.md
 ```
 
-### 4. Focus back on the speakers on stage
-We will guide you when to start Part 1.
-
-## The steps
+## Overview of the workshop steps
 
 | Step | What you do | Time |
 | --- | --- | --- |
@@ -52,33 +53,6 @@ We will guide you when to start Part 1.
 | [2. GitOps](docs/02-gitops.md) | Set up from Git, change something, lose it all, recover | 4 min |
 | [Wrap-up](docs/03-wrap-up.md) | What Git does not save you from | 2 min |
 
-## How the GitOps part works
-
-```mermaid
-flowchart LR
-  subgraph Git["Git (your fork)"]
-    A["gitops/argocd/values.yaml<br/>Argo CD settings"]
-    B["gitops/bootstrap/root.yaml<br/>the root app"]
-    C["gitops/apps/<br/>apps and appsets"]
-  end
-  subgraph Cluster["Cluster"]
-    D["Argo CD"]
-    E["root app"]
-    F["all other apps"]
-  end
-  A -- "helm upgrade" --> D
-  B -- "kubectl apply" --> E
-  C -- "synced by the root app" --> F
-```
-
-```text
-gitops/
-  argocd/values.yaml    Helm values for Argo CD, including its settings
-  bootstrap/root.yaml   The root ("app of apps") Application, the only thing applied by hand
-  apps/                 Every Application and ApplicationSet the root app manages
-charts/                 The Argo CD Helm chart, so installing it needs no download
-scripts/                Helpers behind the make targets
-Makefile                Run `make help`
-```
+## Now start the clickops part - Part 1
 
 Facilitators: see [docs/facilitator.md](docs/facilitator.md).

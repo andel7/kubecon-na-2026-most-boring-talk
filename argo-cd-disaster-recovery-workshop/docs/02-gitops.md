@@ -1,5 +1,36 @@
 # Part 2: GitOps
 
+This is the flow we will implement now:
+
+## How the GitOps part works
+
+```mermaid
+flowchart LR
+  subgraph Git["Git (your fork)"]
+    A["gitops/argocd/values.yaml<br/>Argo CD settings"]
+    B["gitops/bootstrap/root.yaml<br/>the root app"]
+    C["gitops/apps/<br/>apps and appsets"]
+  end
+  subgraph Cluster["Cluster"]
+    D["Argo CD"]
+    E["root app"]
+    F["all other apps"]
+  end
+  A -- "helm upgrade" --> D
+  B -- "kubectl apply" --> E
+  C -- "synced by the root app" --> F
+```
+
+```text
+gitops/
+  argocd/values.yaml    Helm values for Argo CD, including its settings
+  bootstrap/root.yaml   The root ("app of apps") Application, the only thing applied by hand
+  apps/                 Every Application and ApplicationSet the root app manages
+charts/                 The Argo CD Helm chart, so installing it needs no download
+scripts/                Helpers behind the make targets
+Makefile                Run `make help`
+```
+
 The same apps again, but this time they are declared in Git, in the `gitops/` folder of your fork:
 
 | File | What it is |
