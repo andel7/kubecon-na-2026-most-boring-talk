@@ -54,20 +54,18 @@ Meanwhile, the setup installs the tools, creates a Kubernetes cluster and instal
 ```mermaid
 flowchart LR
   subgraph Git["Git (your fork)"]
-    A[gitops/argocd/values.yaml<br/>Argo CD settings]
-    B[gitops/bootstrap/root.yaml]
-    C[gitops/apps/*<br/>apps and appsets]
+    A["gitops/argocd/values.yaml<br/>Argo CD settings"]
+    B["gitops/bootstrap/root.yaml<br/>the root app"]
+    C["gitops/apps/<br/>apps and appsets"]
   end
   subgraph Cluster["Cluster"]
-    D[Argo CD]
-    E[root app]
-    F[all other apps]
+    D["Argo CD"]
+    E["root app"]
+    F["all other apps"]
   end
   A -- "helm upgrade" --> D
-  B -- "kubectl apply -f" --> E
-  C -- "read by" --> E
-  E -- "Argo CD syncs" --> F
-
+  B -- "kubectl apply" --> E
+  C -- "synced by the root app" --> F
 ```
 
 ```text
