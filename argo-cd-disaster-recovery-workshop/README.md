@@ -66,7 +66,7 @@ flowchart LR
   A -- "helm upgrade" --> D
   B -- "kubectl apply -f" --> E
   E -- "Argo CD syncs" --> F
-  C -. read by .-> E
+  C -- "read by" --> E
 ```
 
 ```text
