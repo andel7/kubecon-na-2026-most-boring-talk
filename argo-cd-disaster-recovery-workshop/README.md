@@ -8,7 +8,7 @@ In 10 minutes you run the same two apps twice, and lose them each time:
 | --- | --- | --- |
 | [1. ClickOps](docs/01-clickops.md) | Manually create two apps, lose them, rebuild by hand | 4 min |
 | [2. GitOps](docs/02-gitops.md) | Set up from Git, change something, lose it all, recover automatically| 4 min |
-| [Wrap-up](docs/03-wrap-up.md) | What Git does not save you from | 2 min |
+| [3. Wrap-up](docs/03-wrap-up.md) | What Git does not save you from | 2 min |
 
 ## Start here
 
