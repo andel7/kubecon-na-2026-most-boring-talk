@@ -146,4 +146,4 @@ Look briefly at the Argo CD UI and observe all the apps re-appearing. Each one r
 
 And this recovery would be as easy with 200 apps (it would take a bit longer though)!  
 
-Next: [Wrap-up](03-wrap-up.md)
+# Next: [Wrap-up](03-wrap-up.md)

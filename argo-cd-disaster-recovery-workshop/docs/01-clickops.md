@@ -5,31 +5,15 @@
 
 You will create two apps the way many teams start: by clicking and typing. Then you lose them.
 
-## 1. Open Argo CD
+## 1. Log in to Argo CD
 
-In the terminal, check that the setup has finished and print the admin password, by running this:
+If you are logged in to Argo CD UI already, continue to step 2.
+
+Otherwise, run:
 
 ```bash
 make ui
 ```
-
-If it says the setup is still running, rerun it with `watch`, which will run it repeatedly till it succeeds:
-
-```bash
-watch make ui
-```
-
-Eventually you will see:
-
-```
-==> Waiting for the Argo CD UI on http://localhost:8080   
-✔ argocd CLI logged in as admin
-
-Argo CD UI: http://localhost:8080     
-Username:   admin    
-Password:   ...   
-```
-You can stop the `watch` command with Ctrl+C or open a new terminal.
 
 Open the Argo CD UI URL. Log in as `admin` with the printed password.
 
@@ -90,13 +74,13 @@ The cluster where Argo CD runs just died. In real life, Argo CD often runs on it
 kubectl get deployments --all-namespaces
 ```
 
-Your users don't notice anything yet. But nothing manages these apps any more: no syncing, no self-healing, and no record of how they were configured.
+Your users don't notice anything yet. But nothing manages these workloads any more: no syncing, no self-healing, and no record of how they were configured.
 
 ## 6. Rebuild from memory
 
 Create both apps again, in the UI or the CLI. Don't scroll back through this page or your terminal, because in a real disaster that history lived on someone else's laptop. You have **2 minutes**.
 
-If you get every setting right, Argo CD picks up the running app and shows it as **Synced**. If not, you'll see it **OutOfSync**, or a second copy of the app.
+If you get every setting right, Argo CD picks up the running workloads and shows the app as **Synced**. If not, you'll see it **OutOfSync**.
 
 When time is up, check your work:
 
@@ -110,6 +94,7 @@ When time is up, check your work:
 
 </details>
 
-Now imagine those were 200 apps, created by 15 people over two years, from their laptops.
+
+Now imagine those were 200 apps, created by 15 people over two years, from their laptops!
 
 Next: [Part 2: GitOps](02-gitops.md)

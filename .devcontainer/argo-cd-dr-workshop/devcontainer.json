@@ -39,7 +39,7 @@
     },
     "codespaces": {
       "openFiles": [
-        "docs/01-clickops.md"
+        "docs/00-verify-setup.md"
       ]
     }
   }
