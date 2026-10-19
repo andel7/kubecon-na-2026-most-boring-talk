@@ -31,15 +31,18 @@ In your fork, select **Code** > **Codespaces**, then **...** > **New with option
 
 Select **Create codespace**.
 
+If you get a `Do you trust the authors of the files in this folder?` dialogue, make sure to press the green `Trust Folder & Continue` button, otherwise the workshop may not run.
+
 ### 3. Open Part 1
 
-When the Codespace opens, Part 1 should open automatically. If it doesn't, run this in the terminal:
+When the Codespace opens, Part 1 (docs/01-clickops.md file) should open automatically. If it doesn't, run this in the terminal:
 
 ```bash
 code docs/01-clickops.md
 ```
 
-Meanwhile, the setup installs the tools, creates a Kubernetes cluster and installs Argo CD. Part 1 starts by checking that it has finished.
+### 4. Focus back on the speakers on stage
+We will guide you when to start Part 1.
 
 ## The steps
 
