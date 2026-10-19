@@ -65,8 +65,9 @@ flowchart LR
   end
   A -- "helm upgrade" --> D
   B -- "kubectl apply -f" --> E
-  E -- "Argo CD syncs" --> F
   C -- "read by" --> E
+  E -- "Argo CD syncs" --> F
+
 ```
 
 ```text
