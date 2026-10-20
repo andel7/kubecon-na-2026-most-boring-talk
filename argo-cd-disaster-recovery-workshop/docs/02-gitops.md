@@ -126,7 +126,7 @@ make disaster
 The cluster running Argo CD died again. Every Application is gone from Argo CD, but the workloads are still running:
 
 ```bash
-kubectl get deployments --all-namespaces
+kubectl get deployments --all-namespaces | grep guestbook
 ```
 
 Check that the Argo CD UI is now empty.

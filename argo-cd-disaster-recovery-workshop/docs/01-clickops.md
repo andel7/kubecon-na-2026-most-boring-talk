@@ -71,7 +71,7 @@ make disaster
 The cluster where Argo CD runs just died. In real life, Argo CD often runs on its own management cluster, separate from the apps it deploys. That's what this simulates: every Application is gone from Argo CD, but the workloads themselves are still running:
 
 ```bash
-kubectl get deployments --all-namespaces
+kubectl get deployments --all-namespaces | grep guestbook
 ```
 
 Your users don't notice anything yet. But nothing manages these workloads any more: no syncing, no self-healing, and no record of how they were configured.

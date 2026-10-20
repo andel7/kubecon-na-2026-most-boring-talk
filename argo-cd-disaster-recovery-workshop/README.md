@@ -1,6 +1,7 @@
 # Argo CD disaster recovery workshop overview
 
-All your Argo CD Applications are gone. How long until everything is back?
+All your Argo CD Applications are gone or you can't access the cluster where Argo CD lives. 
+How long until you recover everything?
 
 In 10 minutes you run the same two apps twice, and lose them each time:
 
@@ -9,6 +10,8 @@ In 10 minutes you run the same two apps twice, and lose them each time:
 | [1. ClickOps](docs/01-clickops.md) | Manually create two apps, lose them, rebuild by hand | 4 min |
 | [2. GitOps](docs/02-gitops.md) | Set up from Git, change something, lose it all, recover automatically| 4 min |
 | [3. Wrap-up](docs/03-wrap-up.md) | Summary and what Git does not save you from | 2 min |
+
+For simplicity and speed of the workshop, there is a single cluster where Argo CD and the workloads would live, so a disaster would simply mean all Applications deleted from Argo CD. 
 
 ## Start here
 
