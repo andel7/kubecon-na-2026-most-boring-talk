@@ -3,7 +3,7 @@
 > [!TIP]
 > Reading this as plain text? Press **Cmd+Shift+V** (Mac) or **Ctrl+Shift+V** (Windows/Linux) to see it formatted.
 
-All the following steps must be performed in your newely created Codespace.
+**Important: all the following steps must be performed in your newely created Codespace.**
 
 ## 1. Do you trust the authors of the files in this folder?
 
