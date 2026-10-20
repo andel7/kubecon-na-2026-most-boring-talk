@@ -36,7 +36,7 @@ Password:   ...
 ```
 You can stop the `watch` command with Ctrl+C or open a new terminal.
 
-## 2. Open the Argo CD UI
+## 3. Open the Argo CD UI
 
 Open the Argo CD UI URL. Log in as `admin` with the printed password.
 
