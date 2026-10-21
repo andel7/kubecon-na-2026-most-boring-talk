@@ -26,7 +26,7 @@ restore: ## Restore the newest backup into a fresh Postgres
 status: ## Show what Backstage has right now, as numbers
 	@scripts/status.sh
 
-register: ## Register legacy-billing through the API (if the portal refuses the URL)
+register: ## Register legacy-billing through the API instead of the portal
 	@scripts/register.sh
 
 seed: ## Facilitator shortcut: run the template twice and register legacy-billing

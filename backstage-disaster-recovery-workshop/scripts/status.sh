@@ -17,8 +17,16 @@ else
   backend="DOWN (the portal and its API do not answer)"
 fi
 
+ready="$(kubectl -n "${NS}" get pods -l app=backstage -o jsonpath='{.items[*].status.conditions[?(@.type=="Ready")].status}' 2>/dev/null)"
+case "${ready}" in
+  *True*) pod="Ready" ;;
+  "")     pod="no pod" ;;
+  *)      pod="not ready" ;;
+esac
+
 printf '  %-28s %s\n' "Postgres" "${pg}"
-printf '  %-28s %s\n' "Backstage" "${backend}"
+printf '  %-28s %s\n' "Backstage pod (Kubernetes)" "${pod}"
+printf '  %-28s %s\n' "Backstage portal and API" "${backend}"
 printf '  %-28s %s\n' "Catalog entities" "$(entity_count)"
 printf '  %-28s %s\n' "Scaffolder tasks" "$(task_count)"
 printf '  %-28s %s\n' "Registered locations" "$(location_count)"
