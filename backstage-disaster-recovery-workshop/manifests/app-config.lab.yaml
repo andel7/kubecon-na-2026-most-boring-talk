@@ -4,6 +4,9 @@ app:
   title: Boring Backstage
   baseUrl: ${BASE_URL}
 
+organization:
+  name: Boring Corp
+
 backend:
   baseUrl: ${BASE_URL}
   listen: 0.0.0.0:7007
