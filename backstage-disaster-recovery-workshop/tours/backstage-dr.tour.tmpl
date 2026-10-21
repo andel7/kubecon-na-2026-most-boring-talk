@@ -1,1 +1,89 @@
-{"title":"#1 - Backstage disaster recovery","steps":[]}
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "#1 - Backstage disaster recovery",
+  "description": "Use Backstage, back it up, lose its database, restore it, and measure your RTO and RPO.",
+  "isPrimary": true,
+  "steps": [
+    {
+      "title": "Welcome: open the portal",
+      "file": "Makefile",
+      "line": "{{LINE:Makefile:^ui:}}",
+      "description": "## Backstage disaster recovery, in 15 minutes\n\nYou will use Backstage, back it up, lose its database, and get it back. Every grey `>>` line below is a click: it runs in the terminal.\n\n**1. Check that the setup finished:**\n\n>> make ui\n\nIf it says the setup is still running, wait a minute and click it again.\n\n**2. Open the portal:** [open it inside the editor](command:simpleBrowser.show?{{BASE_URL_ARG}}), or [open in a new tab]({{BASE_URL}}).\n\nSelect **ENTER** under **Guest**. You see three components: `cart-service`, `checkout-api`, `checkout-web`. **Keep the portal open for the whole lab.**\n\nLong version: [docs/00-verify-setup.md](./docs/00-verify-setup.md)",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Part 1: run a template, twice",
+      "file": "manifests/catalog/template.yaml",
+      "line": "{{LINE:manifests/catalog/template.yaml:action: debug:log}}",
+      "description": "This template only logs (see `debug:log` here). Each run is recorded as a **scaffolder task**.\n\nIn the portal:\n1. Sidebar > **Create**, then **Choose** on **Create a lab service**.\n2. **Service name** `my-service` > **Review** > **Create**. It completes in a second.\n3. Do it again with `my-other-service`.\n4. **Create** > **Tasks**: both runs are listed.\n\nLong version: [docs/01-seed.md](./docs/01-seed.md)"
+    },
+    {
+      "title": "Part 1: register a component through the portal",
+      "file": "manifests/catalog-files/catalog-info.yaml",
+      "line": "{{LINE:manifests/catalog-files/catalog-info.yaml:name: legacy-billing}}",
+      "description": "Teams also register their own repositories. This file is served by a small web server in the cluster.\n\nIn the portal: sidebar > **Register Existing Component**, enter this **URL**:\n\n```text\nhttp://catalog-files.backstage.svc.cluster.local/catalog-info.yaml\n```\n\nthen **Analyze** > **Import**. The **Catalog** now has a fourth component: `legacy-billing`.\n\nImport failed? Click this instead:\n\n>> make register"
+    },
+    {
+      "title": "Part 1: count, then back up",
+      "file": "Makefile",
+      "line": "{{LINE:Makefile:^backup:}}",
+      "description": "Check the numbers: 11 entities, 2 scaffolder tasks, 1 registered location.\n\n>> make status\n\nNow take a backup (`pg_dumpall` of every Backstage database):\n\n>> make backup\n\n**Write down the backup time it prints.**",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Part 2: lose the database",
+      "file": "manifests/postgres.yaml",
+      "line": "{{LINE:manifests/postgres.yaml:volumeClaimTemplates:}}",
+      "description": "This volume is Postgres' disk. `make disaster` deletes it and the Postgres pod. Kubernetes starts a new Postgres on a new, **empty** disk.\n\n>> make disaster\n\n**Reload the portal.** The page loads, but you are back on the sign-in page and **ENTER** does nothing: signing in needs the database too.\n\n>> make status\n\nThe Backstage pod is **Ready** (Kubernetes is happy), but the portal and API are **DOWN**. Backstage creates its tables only when it starts, so it does not recover on its own.\n\nLong version: [docs/02-disaster.md](./docs/02-disaster.md)",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Part 2: restart Backstage on the empty database",
+      "file": "Makefile",
+      "line": "{{LINE:Makefile:^restart-backend:}}",
+      "description": "What most people try first:\n\n>> make restart-backend\n\nReload the portal and select **ENTER** under **Guest** again (your session's signing keys were in the database). If a dialog offers a *legacy guest token*, select **Cancel**, reload, and **ENTER**.\n\nNext step: what came back?",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Part 2: what came back, what did not",
+      "file": "manifests/app-config.lab.yaml",
+      "line": "{{LINE:manifests/app-config.lab.yaml:^  locations:}}",
+      "description": "Reload the portal and look:\n\n| Where to click | What you see |\n| --- | --- |\n| **Catalog** | 3 components are back. `legacy-billing` is **gone** |\n| **Create** > **Tasks** | **Empty**: both runs are gone |\n| **Search** (sidebar), `checkout` | Results are back |\n\n>> make status\n\n9 entities, 0 tasks, 0 registered locations.\n\n**Why:** these config locations are read from files on every start, and search is rebuilt from the catalog. Task history and portal registrations exist only as rows in Postgres.",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Part 3: restore the backup",
+      "file": "scripts/restore.sh",
+      "line": "{{LINE:scripts/restore.sh:Step 3/4}}",
+      "description": "The runbook: stop Backstage, fresh Postgres, load the newest backup with `psql` (this line), start Backstage.\n\n>> make restore\n\n**Write down the two numbers it prints: RTO** (how long the portal was down) **and RPO** (how old the backup was when the disk died).\n\nLong version: [docs/03-restore.md](./docs/03-restore.md)",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Part 3: everything is back",
+      "file": "Makefile",
+      "line": "{{LINE:Makefile:^status:}}",
+      "description": "Reload the portal: `legacy-billing` is in the **Catalog**, and **Create** > **Tasks** lists both runs again.\n\n>> make status\n\n11 entities, 2 tasks, 1 registered location: the same as before the disaster.\n\nWould your team accept your RTO and RPO for the real portal? With a nightly backup, RPO is up to a day.",
+      "commands": [
+        "workbench.action.terminal.focus"
+      ]
+    },
+    {
+      "title": "Wrap-up: three things to take home",
+      "file": "manifests/postgres.yaml",
+      "line": "{{LINE:manifests/postgres.yaml:password: backstage-lab}}",
+      "description": "1. **Back up Postgres, and place it, per your RTO and RPO.** Nightly dump: up to a day lost. Managed Postgres with point-in-time recovery: minutes. A standby in another zone or region: shorter downtime.\n2. **Keep config and code in Git.** App config, catalog files, templates, the image tag.\n3. **Keep secrets somewhere restorable.** Like this password: a backup you cannot connect to does not help.\n\nLong version: [docs/04-wrap-up.md](./docs/04-wrap-up.md). Finished early? [more/README.md](./more/README.md) loses an availability zone instead."
+    }
+  ]
+}
