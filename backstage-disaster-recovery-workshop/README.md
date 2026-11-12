@@ -59,3 +59,5 @@ A new browser tab opens with the editor. The setup creates the cluster and start
 We will tell you when to start [Part 0 - verifying the setup](docs/00-verify-setup.md). Keep the Codespace tab open: closing it counts towards the idle timeout.
 
 Facilitators: see [docs/facilitator.md](docs/facilitator.md).
+
+Demo: [what good looks like](https://drive.google.com/file/d/11fYO22rzybewctAeBtsQnOINC8V1zt83/view?usp=sharing) (video on Google Drive).
